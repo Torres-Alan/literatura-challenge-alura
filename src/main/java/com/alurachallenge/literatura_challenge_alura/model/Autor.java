@@ -14,8 +14,8 @@ public class Autor {
     private Integer nacimiento;
     private Integer fallecimiento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "libro_id") // Esta será la foreign key en la tabla `autores`
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "libro_id")
     private Libro libro;
 
     public Autor() {}
@@ -68,11 +68,9 @@ public class Autor {
     public String toString() {
         String tituloLibro = (libro != null) ? libro.getTitulo() : "Ninguno";
 
-        return "Autor{" +
-                "nombre='" + nombre + '\'' +
-                ", nacimiento=" + nacimiento +
-                ", fallecimiento=" + fallecimiento +
-                ", libro='" + tituloLibro + '\'' +
-                '}';
+        return "Autor: " + nombre + "\n" +
+                "Fecha de nacimiento: " + nacimiento + "\n" +
+                "Fecha de fallecimiento: " + fallecimiento + "\n" +
+                "Libros: [" + tituloLibro + "]\n";
     }
 }

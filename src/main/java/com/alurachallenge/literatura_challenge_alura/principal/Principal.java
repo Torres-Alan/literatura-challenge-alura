@@ -4,6 +4,7 @@ import com.alurachallenge.literatura_challenge_alura.model.Autor;
 import com.alurachallenge.literatura_challenge_alura.model.DatosLibro;
 import com.alurachallenge.literatura_challenge_alura.model.DatosRespuesta;
 import com.alurachallenge.literatura_challenge_alura.model.Libro;
+import com.alurachallenge.literatura_challenge_alura.repository.AutorRepository;
 import com.alurachallenge.literatura_challenge_alura.repository.LibroRepository;
 import com.alurachallenge.literatura_challenge_alura.service.ConsumoAPI;
 import com.alurachallenge.literatura_challenge_alura.service.ConvierteDatos;
@@ -17,10 +18,12 @@ public class Principal {
     private final ConsumoAPI consumoAPI = new ConsumoAPI();
     private final ConvierteDatos conversor = new ConvierteDatos();
     private final LibroRepository libroRepository;
+    private final AutorRepository autorRepository;
     private final String URL_BASE = "https://gutendex.com/books/?search=";
 
-    public Principal(LibroRepository libroRepository) {
+    public Principal(LibroRepository libroRepository, AutorRepository autorRepository) {
         this.libroRepository = libroRepository;
+        this.autorRepository = autorRepository;
     }
 
     public void mostrarMenu() {
@@ -31,6 +34,7 @@ public class Principal {
                     == MENÚ PRINCIPAL ==
                     1 - Buscar libro por título
                     2 - Listar libros registrados
+                    3.- Listar autores registrados
                     0 - Salir
                     """);
 
@@ -39,6 +43,7 @@ public class Principal {
             switch (opcion) {
                 case 1 -> buscarLibroPorTitulo();
                 case 2 -> listarLibrosRegistrados();
+                case 3 -> listarAutoresRegistrados();
                 case 0 -> System.out.println("== Aplicación finalizada ==\n");
                 default -> System.out.println("== Opción inválida ==\n");
             }
@@ -90,5 +95,17 @@ public class Principal {
         System.out.println("== Lista de libros registrados ==");
         libros.forEach(System.out::println);
     }
+
+    private void listarAutoresRegistrados() {
+        var autores = autorRepository.findAll();
+
+        System.out.println("== Lista de autores registrados ==");
+        if (autores.isEmpty()) {
+            System.out.println("No hay autores registrados.");
+        } else {
+            autores.forEach(System.out::println);
+        }
+    }
+
 
 }
