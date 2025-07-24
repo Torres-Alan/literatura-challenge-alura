@@ -30,6 +30,7 @@ public class Principal {
             System.out.println("""
                     == MENÚ PRINCIPAL ==
                     1 - Buscar libro por título
+                    2 - Listar libros registrados
                     0 - Salir
                     """);
 
@@ -37,6 +38,7 @@ public class Principal {
 
             switch (opcion) {
                 case 1 -> buscarLibroPorTitulo();
+                case 2 -> listarLibrosRegistrados();
                 case 0 -> System.out.println("== Aplicación finalizada ==\n");
                 default -> System.out.println("== Opción inválida ==\n");
             }
@@ -77,6 +79,16 @@ public class Principal {
         } else {
             System.out.println("No se encontró ningún libro con ese título.\n");
         }
+    }
+
+    private void listarLibrosRegistrados() {
+        List<Libro> libros = libroRepository.findAll();
+        if (libros.isEmpty()) {
+            System.out.println("== No hay libros registrados ==");
+            return;
+        }
+        System.out.println("== Lista de libros registrados ==");
+        libros.forEach(System.out::println);
     }
 
 }

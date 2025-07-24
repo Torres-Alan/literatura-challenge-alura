@@ -19,7 +19,7 @@ public class Libro {
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Autor> autores = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "idiomas_libros", joinColumns = @JoinColumn(name = "libro_id"))
     @Column(name = "idioma")
     private List<String> idiomas;
@@ -31,7 +31,7 @@ public class Libro {
         this.numeroDeDescargas = numeroDeDescargas;
         this.idiomas = idiomas;
         this.autores = autores;
-        this.autores.forEach(a -> a.setLibro(this)); // ¡Importante!
+        this.autores.forEach(a -> a.setLibro(this));
     }
 
     public Libro(DatosLibro datos) {
@@ -42,7 +42,7 @@ public class Libro {
         this.autores = datos.autor().stream()
                 .map(a -> {
                     Autor autor = new Autor(a.name(), a.nacimiento(), a.fallecimiento());
-                    autor.setLibro(this); // clave
+                    autor.setLibro(this);
                     return autor;
                 })
                 .toList();
@@ -93,7 +93,6 @@ public class Libro {
         sb.append("----- LIBRO -----\n");
         sb.append("Título: ").append(titulo).append("\n");
 
-        // Si hay varios autores, los mostramos separados por coma
         if (autores != null && !autores.isEmpty()) {
             String nombresAutores = autores.stream()
                     .map(Autor::getNombre)
