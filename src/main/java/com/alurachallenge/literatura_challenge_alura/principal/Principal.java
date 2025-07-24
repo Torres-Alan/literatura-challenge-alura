@@ -35,6 +35,7 @@ public class Principal {
                     1 - Buscar libro por título
                     2 - Listar libros registrados
                     3.- Listar autores registrados
+                    4.- Listar autores vivos en un determinado año
                     0 - Salir
                     """);
 
@@ -44,6 +45,7 @@ public class Principal {
                 case 1 -> buscarLibroPorTitulo();
                 case 2 -> listarLibrosRegistrados();
                 case 3 -> listarAutoresRegistrados();
+                case 4 -> listarAutoresVivosEnAnio();
                 case 0 -> System.out.println("== Aplicación finalizada ==\n");
                 default -> System.out.println("== Opción inválida ==\n");
             }
@@ -101,11 +103,27 @@ public class Principal {
 
         System.out.println("== Lista de autores registrados ==");
         if (autores.isEmpty()) {
-            System.out.println("No hay autores registrados.");
+            System.out.println("No hay autores registrados.\n");
         } else {
             autores.forEach(System.out::println);
         }
     }
+
+    private void listarAutoresVivosEnAnio() {
+        System.out.print("- Escribe el año a consultar: ");
+        int anio = Integer.parseInt(teclado.nextLine());
+
+        var autoresVivos = autorRepository
+                .findByNacimientoLessThanEqualAndFallecimientoGreaterThanEqualOrFallecimientoIsNull(anio, anio);
+
+        if (autoresVivos.isEmpty()) {
+            System.out.println("== No hay autores vivos en ese año ==\n");
+        } else {
+            System.out.println("== Autores vivos en el año " + anio + " ==");
+            autoresVivos.forEach(System.out::println);
+        }
+    }
+
 
 
 }
