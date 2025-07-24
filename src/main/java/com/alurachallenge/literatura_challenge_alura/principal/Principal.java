@@ -34,8 +34,9 @@ public class Principal {
                     == MENÚ PRINCIPAL ==
                     1 - Buscar libro por título
                     2 - Listar libros registrados
-                    3.- Listar autores registrados
-                    4.- Listar autores vivos en un determinado año
+                    3 - Listar autores registrados
+                    4 - Listar autores vivos en un determinado año
+                    5 - Listar libros por idioma
                     0 - Salir
                     """);
 
@@ -46,6 +47,7 @@ public class Principal {
                 case 2 -> listarLibrosRegistrados();
                 case 3 -> listarAutoresRegistrados();
                 case 4 -> listarAutoresVivosEnAnio();
+                case 5 -> listarLibrosPorIdioma();
                 case 0 -> System.out.println("== Aplicación finalizada ==\n");
                 default -> System.out.println("== Opción inválida ==\n");
             }
@@ -121,6 +123,28 @@ public class Principal {
         } else {
             System.out.println("== Autores vivos en el año " + anio + " ==");
             autoresVivos.forEach(System.out::println);
+        }
+    }
+
+    private void listarLibrosPorIdioma() {
+        System.out.println("""
+        - Ingresa el idioma para buscar libros:
+        es - Español
+        en - Inglés
+        fr - Francés
+        pt - Portugués
+        """);
+
+        System.out.print("Código de idioma: ");
+        String codigo = teclado.nextLine().trim().toLowerCase();
+
+        List<Libro> libros = libroRepository.findByIdiomasContainingIgnoreCase(codigo);
+
+        if (libros.isEmpty()) {
+            System.out.println("== No se encontraron libros en el idioma '" + codigo + "' ==\n");
+        } else {
+            System.out.println("== Libros en idioma '" + codigo + "' ==");
+            libros.forEach(System.out::println);
         }
     }
 
