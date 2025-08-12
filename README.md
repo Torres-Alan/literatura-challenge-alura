@@ -1,6 +1,9 @@
-# 📚 Literatura Challenge · Alura
+<h1 align="center">📚 Literatura Challenge · Alura</h1>
 
-Aplicación de consola desarrollada para practicar el consumo de APIs, persistencia de datos con Spring Boot y consultas personalizadas usando JPA/Hibernate.
+<p align="center">
+  Aplicación de consola desarrollada para practicar el consumo de APIs, persistencia de datos con Spring Boot y consultas personalizadas usando JPA/Hibernate.
+</p>
+
 
 ---
 
